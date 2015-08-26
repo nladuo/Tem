@@ -1,4 +1,8 @@
-//php_tem.h
+/**
+ *  php_tem.h
+ *  @author nladuo
+ *  @source url:https://github.com/nladuo/TinyExtMvc
+ */
 #ifndef PHP_TEM_H
 #define PHP_TEM_H
 

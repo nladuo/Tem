@@ -1,4 +1,8 @@
-//tem.c
+/**
+ *  tem.c
+ *  @author nladuo
+ *  @source url:https://github.com/nladuo/TinyExtMvc
+ */
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -17,33 +21,47 @@ static zend_function_entry tem_functions[]={
  
 PHP_MINIT_FUNCTION(tem)
 {
-    //REGISTER_INI_ENTRIES();
 
     //Load Router Class
     if(start_up_tem_router() == FAILURE){
         return FAILURE;
     }
 
-    //Loader Controller Class
+    //Load Controller Class
     if(start_up_tem_controller() == FAILURE){
         return FAILURE;
     }
 
+    //Load Loader Class
     if(start_up_tem_loader() == FAILURE){
         return FAILURE;
     }
 
-
+    //Load Model Class
+    if(start_up_tem_model() == FAILURE){
+        return FAILURE;
+    }
     
     return SUCCESS;
 }
-
-// PHP_MSHUTDOWN_FUNCTION(tem)
-// {
-//     //UNREGISTER_INI_ENTRIES();
-//     return SUCCESS;
-// }
-
+ 
+PHP_MSHUTDOWN_FUNCTION(tem) {
+    return SUCCESS;
+}
+ 
+PHP_RINIT_FUNCTION(tem) {
+    return SUCCESS;
+}
+PHP_RSHUTDOWN_FUNCTION(tem) {
+    return SUCCESS;
+}
+ 
+PHP_MINFO_FUNCTION(tem) {
+    php_info_print_table_start();
+    php_info_print_table_row(2, "Tem Module", "enabled");
+    php_info_print_table_row(2, "version", PHP_TEM_EXTVER);
+    php_info_print_table_end();
+}
 
 //module entry
 zend_module_entry tem_module_entry = {
@@ -53,10 +71,10 @@ zend_module_entry tem_module_entry = {
     PHP_TEM_EXTNAME,
     tem_functions, /* Functions */
     PHP_MINIT(tem), /* MINIT */
-    NULL, /* MSHUTDOWN */
-    NULL, /* RINIT */
-    NULL, /* RSHUTDOWN */
-    NULL, /* MINFO */
+    PHP_MSHUTDOWN(tem),
+    PHP_RINIT(tem),
+    PHP_RSHUTDOWN(tem),
+    PHP_MINFO(tem),
 #if ZEND_MODULE_API_NO >= 20010901
     PHP_TEM_EXTVER, 
 #endif

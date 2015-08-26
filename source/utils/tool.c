@@ -1,9 +1,13 @@
+/**
+ *  utils/tool.c
+ *  @author nladuo
+ *  @source url:https://github.com/nladuo/TinyExtMvc
+ */
 #include "utils/tool.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "Zend/zend_list.h"
 #include "Zend/zend_interfaces.h" 
-
 
 void tem_call_user_function(const char * _function_name, zval* args){
     zval* function_name;
@@ -15,27 +19,13 @@ void tem_call_user_function(const char * _function_name, zval* args){
     params[0]=args;  
 
     if(call_user_function(CG(function_table), NULL, function_name, 
-            retval //don't need return value
-            ,1,params TSRMLS_DC)==FAILURE){  
+            retval, 1, params TSRMLS_DC)==FAILURE){  
         zend_error(E_ERROR,"call function failed");  
     }
-    //zval_ptr_dtor(&function_name);  
+
     zval_ptr_dtor(&retval);  
 }
 
-zend_class_entry* tem_load_user_class(char *classname) {
-
-    int class_len   = strlen(classname);
-    zend_class_entry **ce   = NULL;
-  
-    if (zend_lookup_class((char*)classname, class_len, &ce TSRMLS_CC) == FAILURE
-        || (*ce)->ce_flags & ZEND_ACC_INTERFACE
-        || (*ce)->ce_flags & ZEND_ACC_ABSTRACT){
-        zend_error(E_ERROR,"cannot find class\n");  
-        return NULL;  
-    }
-    return *ce;
-}
 
 void tem_call_require_syntax(char *filepath){
     zval* retval;
@@ -44,7 +34,7 @@ void tem_call_require_syntax(char *filepath){
     zfd.filename = filepath;
     zfd.free_filename = 0;
     zfd.opened_path = NULL;
-    zend_execute_scripts(ZEND_REQUIRE TSRMLS_CC,&retval,1,&zfd); 
+    zend_execute_scripts(ZEND_INCLUDE TSRMLS_CC,&retval,1,&zfd); 
     php_write(&retval, 0 TSRMLS_CC);
 }
 

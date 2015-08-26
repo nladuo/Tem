@@ -1,3 +1,8 @@
+/**
+ *  kernel/controller.h
+ *  @author nladuo
+ *  @source url:https://github.com/nladuo/TinyExtMvc
+ */
 #ifndef __CONTROLLER_H
 #define __CONTROLLER_H
 #include "php.h"
