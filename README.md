@@ -1,11 +1,11 @@
-# TEM
+# Tem
 a tiny php MVC framework implemented by c extension.
-## Installation(Linux)
+## Installation(Linix or Mac)
 ###Note:
 The testing enviornment is Ubuntu 14.04, and the PHP Version is 5.4.6. <br>
 ###Process:
 download the php-src(version >= 5.3)<br>
-rename the TEM's source folder to tem, and put it under the ./php-src/ext/<br>
+rename the Tem's source folder to tem, and put it under the ./php-src/ext/<br>
 use the following commands to generate the dynamic library:tem.so(./php-src/ext/tem/modules/tem.so)
 ```
 $phpize & ./configure & make
